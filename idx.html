@@ -1,0 +1,251 @@
+<style>
+body{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+.modal {
+    width: fit-content;
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09), 0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 26px;
+    max-width: 450px;
+    
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .payment--options {
+    width: calc(100% - 40px);
+    display: grid;
+    grid-template-columns: 33% 34% 33%;
+    gap: 20px;
+    padding: 10px;
+  }
+  
+  .payment--options button {
+    height: 55px;
+    background: #F2F2F2;
+    border-radius: 11px;
+    padding: 0;
+    border: 0;
+    outline: none;
+  }
+  
+  .payment--options button svg {
+    height: 18px;
+  }
+  
+  .payment--options button:last-child svg {
+    height: 22px;
+  }
+  
+  .separator {
+    width: calc(100% - 20px);
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    color: #8B8E98;
+    margin: 0 10px;
+  }
+  
+  .separator > p {
+    word-break: keep-all;
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    font-size: 11px;
+    margin: auto;
+  }
+  
+  .separator .line {
+    display: inline-block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: #e8e8e8;
+    margin: auto;
+  }
+  
+  .credit-card-info--form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input_container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .split {
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+    gap: 15px;
+  }
+  
+  .split input {
+    width: 100%;
+  }
+  
+  .input_label {
+    font-size: 10px;
+    color: #8B8E98;
+    font-weight: 600;
+  }
+  
+  .input_field {
+    width: 350px;
+    height: 40px;
+    padding: 0 0 0 16px;
+    border-radius: 9px;
+    outline: none;
+    background-color: #F2F2F2;
+    border: 1px solid #e5e5e500;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+  }
+  
+  .input_field:focus {
+    border: 1px solid transparent;
+    box-shadow: 0px 0px 0px 2px #242424;
+    background-color: transparent;
+  }
+  
+  .purchase--btn {
+    height: 55px;
+    background: #F2F2F2;
+    border-radius: 11px;
+    border: 0;
+    outline: none;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    background: linear-gradient(180deg, #363636 0%, #1B1B1B 50%, #000000 100%);
+    box-shadow: 0px 0px 0px 0px #FFFFFF, 0px 0px 0px 0px #000000;
+    transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+  }
+  
+  .purchase--btn:hover {
+    box-shadow: 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #0000003a;
+  }
+  
+  /* Reset input number styles */
+  .input_field::-webkit-outer-spin-button,
+  .input_field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .input_field[type=number] {
+    -moz-appearance: textfield;
+  }
+  .content{
+    margin-top: 50px;
+  }
+
+</style>
+
+<body>
+    <div class="modal">
+        <form class="form">
+          <div class="payment--options">
+             <h1>Product</h1>
+          </div>
+          <div class="credit-card-info--form">
+            <div class="input_container">
+              <label for="password_field" class="input_label">Name</label>
+              <input id="task" class="input_field" type="text" name="input-name" title="Inpit title" placeholder="Enter your Product name">
+            </div>
+            <div class="input_container">
+              <label for="password_field" class="input_label">Price</label>
+              <input  id="time"  class="input_field" type="text" name="input-name" title="Inpit title" >
+            </div>
+            <div class="input_container">
+              <label for="password_field" class="input_label">Status</label>
+              <div class="split">
+                <select  class="input_field" name="status" id="status">
+                    <option value="pending">Booked</option>
+                    <option value="completed">Not Booked</option>
+                  </select>
+              <!-- <input id="password_field" class="input_field" type="number" name="cvv" title="CVV" placeholder="CVV"> -->
+            </div>
+            </div>
+          </div>
+            <button class="purchase--btn" onclick="callAPI()">Proceed</button>
+            <button type="button"class="purchase--btn"  onclick="retrieveData()">Retrieve Data</button>
+        </form>
+        </div>
+
+    
+            
+            <div id="show">
+            </div>
+
+            
+
+        <script>
+       
+            const apikey = 'https://t8w8womoik.execute-api.us-east-1.amazonaws.com/stage-1';
+            const get_apikey = 'https://ebe0etcnk0.execute-api.us-east-1.amazonaws.com/getprod';
+     
+            
+     
+            async  function callAPI(){
+            
+                 const task = document.getElementById('task').value;
+                   const time = document.getElementById('time').value;
+                   const status = document.getElementById('status').value;
+     
+                   console.log(task,time,status)
+         
+                   const data = {
+                     Task:task,
+                     Time:time,
+                     Status:status
+                   };
+         
+                   const response = await fetch(apikey, {
+                     method: 'POST',
+                     body: JSON.stringify(data),
+                     headers: {
+                         'Content-Type': 'application/json'
+                     },
+                     redirect: 'follow'
+                 });
+                  
+                   const res =  await response.json();
+                   console.log(res)
+                     alert(res);
+              }
+     
+             async function retrieveData(){
+                 const response = await fetch(get_apikey, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json'
+                     },
+                     redirect: 'follow'
+                 });
+                 const res =  await response.json();
+                 console.log(res)
+                 let show = document.getElementById('show');
+                 show.innerHTML = '';
+                 res.forEach(element => {
+                     show.innerHTML += `<div>Task: ${element.task}    Time: ${element.time}      Status: ${element.status}</div>`;
+                 });
+             }
+     
+     </script>
+     
+</body>
